@@ -1,5 +1,5 @@
 import requests
-import time
+import time, random
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from bots_functions import *
@@ -25,10 +25,19 @@ while True:
                     chat_id = event.message['from_id']
                     user_id = chat_id
                 text = event.message['text'].lower()
-
+                # 'attachments': [{'type': 'sticker', 'sticker': {'product_id': 4, 'sticker_id': 163
+                if event.message['attachments']:
+                    if event.message['attachments'][0]['type'] == 'sticker':
+                        if event.message['attachments'][0]['sticker']['sticker_id'] == 163:
+                            vk.method('messages.send', {
+                                'sticker_id': 19133,
+                                from_type: chat_id,
+                                'message': 'орех',
+                                'random_id': random.randint(0, 2048)
+                            })
                 if text == "бот неделя":
                     VkBot.write_msg(chat_id, bot_week(), from_type)
-                if text == "вадим." and user_id == 380679686:
+                if text == "вадим.":
                     VkBot.write_msg(chat_id, angry_vadim(), from_type)
                 if text == 'бот хелп':
                     VkBot.write_msg(chat_id, show_help(), from_type)
