@@ -1,66 +1,38 @@
 import requests
-import datetime, random
 import time
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
-
-
-def write_msg(user_id, message, vk, chat_id='user_id'):
-    vk.method('messages.send', {
-        chat_id: user_id,
-        "message": message,
-        'random_id': random.randint(0, 2048)
-    })
-
-
-def bot_week():
-    now = datetime.datetime.now() + datetime.timedelta(hours=+5)
-    week = datetime.datetime.isocalendar(now)[1]
-    if week % 2 == 0:
-        message = "Знаменатель"
-    else:
-        message = "Числитель"
-    return message
-
-
-def angry_vadim():
-    return "вадим😡😡😡"
-
-
-def show_help():
-    help = 'Доступные команды:\n'
-    help += '\nБот неделя: показывает день недели'
-    return help
-
+from bots_functions import *
 
 with open('token.txt', 'r') as f:
     token = f.read()
 
 vk = vk_api.VkApi(token=token)
+VkBot = VkBot(vk)
 longpoll = VkBotLongPoll(vk, group_id=202842010)
 
-now = datetime.datetime.now() + datetime.timedelta(hours=5)
-print(now)
-print(datetime.date.isocalendar(now))
+while True:
+    try:
+        print('подключение')
+        for event in longpoll.listen():
+            if event.type == VkBotEventType.MESSAGE_NEW:
+                if event.from_chat:
+                    from_type = 'chat_id'
+                    chat_id = event.chat_id
+                    user_id = event.message['from_id']
+                else:
+                    from_type = 'user_id'
+                    chat_id = event.message['from_id']
+                    user_id = chat_id
+                text = event.message['text'].lower()
 
-try:
-    for event in longpoll.listen():
-        if event.type == VkBotEventType.MESSAGE_NEW:
-            if event.from_chat:
-                chat_id = 'chat_id'
-                user_id = event.chat_id
-                from_id = event.message['from_id']
-            else:
-                chat_id = 'user_id'
-                user_id = event.message['from_id']
-                from_id = event.message['from_id']
-            text = event.message['text'].lower()
-            if text.lower() == "бот неделя":
-                write_msg(user_id, bot_week(), vk, chat_id)
-            if text.lower() == "вадим." and from_id == 380679686:
-                write_msg(user_id, angry_vadim(), vk, chat_id)
-            if text.lower() == 'бот хелп':
-                write_msg(user_id, show_help(), vk, chat_id)
-except requests.exceptions.ReadTimeout:
-    print("переподключение" + str(datetime.datetime.now() + datetime.timedelta(hours=5)))
-    time.sleep(3)
+                if text == "бот неделя":
+                    VkBot.write_msg(chat_id, bot_week(), from_type)
+                if text == "вадим." and user_id == 380679686:
+                    VkBot.write_msg(chat_id, angry_vadim(), from_type)
+                if text == 'бот хелп':
+                    VkBot.write_msg(chat_id, show_help(), from_type)
+    except requests.exceptions.ReadTimeout:
+        with open("log.log", 'a+', encoding='utf-8') as f:
+            f.write("переподключение " + str(datetime.datetime.now() + datetime.timedelta(hours=5)) + '\n')
+        time.sleep(3)
