@@ -41,7 +41,7 @@ while True:
                     VkBot.write_msg(chat_id, angry_vadim(), from_type)
                 if text == 'бот хелп':
                     VkBot.write_msg(chat_id, show_help(), from_type)
-    except requests.exceptions.ReadTimeout:
+    except requests:
         with open("log.log", 'a+', encoding='utf-8') as f:
             f.write("переподключение " + str(datetime.datetime.now() + datetime.timedelta(hours=5)) + '\n')
         time.sleep(3)
