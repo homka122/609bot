@@ -145,7 +145,8 @@ def help_text():
     return help_text
 
 
-def info(projects, data, bot):
+def info(s_projects, data, bot):
+    projects = s_projects.copy()
     named_project = data['project']
     if named_project:
         if named_project in projects:
