@@ -73,3 +73,9 @@ class VkBotMessages:
             vk_args = {"chat_id": self.chat_id, "user_id": user_id}
             self.vk.method('messages.removeChatUser', vk_args)
 
+    def get_full_name(self, dop_dict=None):
+        vk_args = {'user_ids': [self.user_id]}
+        if dop_dict:
+            vk_args.update(dop_dict)
+        result = self.vk.method('users.get', vk_args)
+        return result[0]['first_name'] + " " + result[0]['last_name']
