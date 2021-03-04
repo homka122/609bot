@@ -44,9 +44,9 @@ def show_help():
 # пока безполезная функция, которая печатает ошибку и записывает в логи время переподключения
 def reconnect(e):
     with open("log.log", 'a+', encoding='utf-8') as f:
-        f.write("переподключение " + str(datetime.datetime.now() + datetime.timedelta(hours=5)) + '\n')
+        f.write((datetime.datetime.now() + datetime.timedelta(hours=5)).strftime("[%Y/%m/%d: %H:%M:%S] ") + str(e) + '\n')
     print(e)
-    time.sleep(3)
+    time.sleep(1)
 
 
 class VkBotMessages:
