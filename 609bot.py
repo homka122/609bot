@@ -3,11 +3,11 @@ import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from bots_functions import *
 from NewGroup import new_group
+from config import TOKEN, GROUP_ID
 import json
 
-token = get_token()
-vk = vk_api.VkApi(token=token)
-longpoll = VkBotLongPoll(vk, group_id=202842010)
+vk = vk_api.VkApi(token=TOKEN)
+longpoll = VkBotLongPoll(vk, group_id=GROUP_ID)
 DEBUG = 0
 
 

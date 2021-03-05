@@ -15,12 +15,6 @@ def reply_sticker(bot, send=163, reply=19133):
         pass
 
 
-def get_token():
-    with open('token.txt', 'r') as f:
-        token = f.read()
-    return token
-
-
 # У нас в вузе одна неделя Знаменатель, другая Числитель, иногда это требуется знать, от этого зависит наше расписание
 def bot_week():
     # На хостинге время UTC+0, поэтому приходится прибавлять 5 часов
