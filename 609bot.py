@@ -2,7 +2,7 @@ import requests
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from bots_functions import *
-from NewGroup import new_group
+import NewGroup
 from config import TOKEN, GROUP_ID
 import json
 
@@ -26,15 +26,9 @@ def main():
                 # VkBot.kick(249198867)
             if text == 'бот хелп':
                 VkBot.write_msg(show_help())
+            if text == 'info':
+                VkBot.write_msg(NewGroup.info())
             try:
-                if text.split()[0] == "нгру":
-                    if event.from_user:
-                        result = new_group(VkBot, text)
-                        if result:
-                            with open("homka.json", 'w', encoding='UTF-8') as f:
-                                json.dump(result, f, ensure_ascii=False, indent=2)
-                    else:
-                        VkBot.write_msg("Эти команды отныне доступны лишь в лс")
                 if text.split()[0] in ["@1гр", "@2гр", "@1подгр", "@2подгр", "@3подгр", "@хомяки"]:
                     VkBot.wake_up_guys(text)
             except:
