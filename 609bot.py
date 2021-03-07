@@ -39,6 +39,9 @@ if not DEBUG:
     while True:
         try:
             main()
+        except KeyboardInterrupt:
+            print("Бот остановлен")
+            break
         except Exception as e:
             reconnect(e)
 else:
