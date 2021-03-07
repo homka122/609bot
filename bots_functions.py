@@ -92,7 +92,9 @@ class VkBotMessages:
         third_subgroup = '180488860 237545860 58485102 612990907 218436496 214561873 137407116'
         hamsters = '380679686'
         choice = {"@1гр": first_group, "@2гр": second_group, "@1подгр": first_subgroup,
-                  "@2подгр": second_subgroup, "@3подгр": third_subgroup, "@хомяки": hamsters}
+                  "@2подгр": second_subgroup, "@3подгр": third_subgroup, "@хомяки": hamsters,
+                  "@1": first_group, "@2": second_group, "@@1": first_subgroup, "@@2": second_subgroup,
+                  "@@3": third_subgroup}
         guys = ''
         for guy in choice[cmd].split():
             guys += f"@id{guy} (.) "

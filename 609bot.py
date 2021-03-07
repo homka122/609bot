@@ -29,7 +29,7 @@ def main():
             if text == 'info':
                 VkBot.write_msg(NewGroup.info())
             try:
-                if text.split()[0] in ["@1гр", "@2гр", "@1подгр", "@2подгр", "@3подгр", "@хомяки"]:
+                if text.split()[0] in ["@1гр", "@2гр", "@1подгр", "@2подгр", "@3подгр", "@хомяки", "@1", "@2", "@@1", "@@2", "@@3"]:
                     VkBot.wake_up_guys(text)
             except:
                 pass
