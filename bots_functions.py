@@ -2,6 +2,7 @@ import requests
 import datetime
 import random
 import time
+from config import USER_UTC
 
 
 # Отвечает стикеров на отправленный стикер.
@@ -18,7 +19,7 @@ def reply_sticker(bot, send=163, reply=19133):
 # У нас в вузе одна неделя Знаменатель, другая Числитель, иногда это требуется знать, от этого зависит наше расписание
 def bot_week():
     # На хостинге время UTC+0, поэтому приходится прибавлять 5 часов
-    now = datetime.datetime.now() + datetime.timedelta(hours=+5)
+    now = datetime.datetime.now() + datetime.timedelta(hours=USER_UTC)
     week = datetime.datetime.isocalendar(now)[1]  # узнать номер недели
     if week % 2 == 0:
         message = "Знаменатель"
@@ -38,7 +39,7 @@ def show_help():
 # пока безполезная функция, которая печатает ошибку и записывает в логи время переподключения
 def reconnect(e):
     with open("log.log", 'a+', encoding='utf-8') as f:
-        f.write((datetime.datetime.now() + datetime.timedelta(hours=5)).strftime("[%Y/%m/%d: %H:%M:%S] ") + str(e) + '\n')
+        f.write((datetime.datetime.now() + datetime.timedelta(hours=USER_UTC)).strftime("[%Y/%m/%d: %H:%M:%S] ") + str(e) + '\n')
     print(e)
     time.sleep(1)
 
